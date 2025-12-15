@@ -1,13 +1,412 @@
-
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Английский для путешествий</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Английский для путешествий</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0c0f1a;
+      color: #f0f4ff;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      background: linear-gradient(135deg, #0a0d17 0%, #121629 100%);
+      border-radius: 16px;
+      margin-bottom: 3rem;
+      box-shadow: 0 0 20px rgba(64, 224, 208, 0.15),
+                  inset 0 0 10px rgba(255, 179, 71, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(64,224,208,0.1) 0%, transparent 70%);
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(to right, #40e0d0, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(255, 179, 71, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #e0ecff;
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #40e0d0;
+      text-shadow: 0 0 8px rgba(64, 224, 208, 0.4);
+    }
+
+    /* Audience */
+    .audience-grid {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .audience-card {
+      background: rgba(18, 22, 41, 0.7);
+      border: 1px solid rgba(64, 224, 208, 0.3);
+      border-radius: 12px;
+      padding: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      flex: 1;
+      min-width: 140px;
+    }
+
+    /* Curriculum */
+    .curriculum-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .item-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffb347;
+      min-width: 2.5rem;
+      text-align: right;
+    }
+
+    .item-content p {
+      margin: 0.4rem 0;
+    }
+
+    .item-content .note {
+      font-style: italic;
+      color: #40e0d0;
+      margin-top: 0.5rem;
+    }
+
+    /* Lists */
+    .features-list, .simple-list {
+      padding-left: 1.5rem;
+    }
+
+    .features-list li, .simple-list li {
+      margin-bottom: 0.8rem;
+      position: relative;
+    }
+
+    .features-list li::before, .simple-list li::before {
+      content: "•";
+      color: #ffb347;
+      font-size: 1.4rem;
+      position: absolute;
+      left: -1.4rem;
+      top: -0.2rem;
+    }
+
+    /* Pricing */
+    .pricing {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .price-card {
+      background: rgba(18, 22, 41, 0.8);
+      border-radius: 12px;
+      padding: 1.2rem;
+      flex: 1;
+      min-width: 200px;
+      border: 1px solid rgba(255, 179, 71, 0.3);
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, #0f1222 0%, #151a33 100%);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 179, 71, 0.2);
+      margin-top: 2rem;
+    }
+
+    .cta-box h2 {
+      margin-bottom: 1rem;
+      color: #ffb347;
+    }
+
+    .highlight {
+      font-size: 1.15rem;
+      margin: 1.2rem 0;
+      color: #e0f7fa;
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, #40e0d0, #2ab7b5);
+      color: #0c0f1a;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 1rem;
+      box-shadow: 0 6px 20px rgba(64, 224, 208, 0.5);
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(64, 224, 208, 0.7);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      color: #8aa0b0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.2rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+
+      .curriculum-item {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .item-number {
+        text-align: left;
+        font-size: 1.5rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        font-size: 1.25rem;
+      }
+
+      .pricing {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 2rem 1rem 3rem;
+      }
+
+      .section h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <h1>Английский для путешествий</h1>
+      <p class="subtitle">Мечтаете свободно общаться за границей — от заказа кофе до поиска утраченного чемодана?</p>
+      <p class="lead">Этот курс научит вашего ребёнка реальному разговорному английскому, который пригодится в отпуске, поездках и будущих путешествиях!</p>
+    </header>
+
+    <!-- Для кого -->
+    <section class="section">
+      <h2>📌 Для кого курс</h2>
+      <div class="audience-grid">
+        <div class="audience-card">4–5 класс</div>
+        <div class="audience-card">6–8 класс</div>
+      </div>
+    </section>
+
+    <!-- Программа -->
+    <section class="section">
+      <h2>📚 Программа курса</h2>
+      <div class="curriculum-list">
+        <div class="curriculum-item">
+          <div class="item-number">1.</div>
+          <div class="item-content">
+            <strong>Аэропорт без стресса</strong>
+            <p>Регистрация, паспортный контроль, вопросы на таможне — всё на английском.</p>
+            <p class="note">👉 Уверенность уже в первые часы за границей.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">2.</div>
+          <div class="item-content">
+            <strong>В отеле: заселение и помощь</strong>
+            <p>Как попросить сменить номер, вызвать уборку или спросить про Wi-Fi.</p>
+            <p class="note">👉 Практика вежливых фраз и повседневной лексики.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">3.</div>
+          <div class="item-content">
+            <strong>Кафе и рестораны</strong>
+            <p>Заказ еды, вопросы про аллергены, счёт и чаевые.</p>
+            <p class="note">👉 Развитие гастрономического словаря и уверенности в общении.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">4.</div>
+          <div class="item-content">
+            <strong>На улице: ориентирование и просьбы</strong>
+            <p>Как спросить дорогу, вызвать такси или найти аптеку.</p>
+            <p class="note">👉 Понимание устной речи и произношения в реальных ситуациях.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">5.</div>
+          <div class="item-content">
+            <strong>Экстренные случаи</strong>
+            <p>Потеря вещей, болезнь, помощь полиции — всё это на английском.</p>
+            <p class="note">👉 Важные фразы, которые могут спасти отпуск.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">6–8.</div>
+          <div class="item-content">
+            <strong>Туризм и развлечения</strong>
+            <p>Покупка билетов, экскурсии, общение с гидами, музеи и парки.</p>
+            <p class="note">👉 Погружение в культурный контекст через язык.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">9.</div>
+          <div class="item-content">
+            <strong>Дружба в путешествиях</strong>
+            <p>Как познакомиться с другими детьми или подростками за границей.</p>
+            <p class="note">👉 Игровая практика диалогов и неформального общения.</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="item-number">10.</div>
+          <div class="item-content">
+            <strong>Дипломный проект: «Мой идеальный отпуск»</strong>
+            <p>Ребёнок планирует воображаемое путешествие и представляет его на английском.</p>
+            <p class="note">👉 Развитие связной речи и творческого самовыражения.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Почему особенный -->
+    <section class="section">
+      <h2>✨ Почему этот курс особенный?</h2>
+      <ul class="features-list">
+        <li>Акцент на практическую, живую речь, а не на грамматику ради грамматики.</li>
+        <li>Все ситуации — из реальной жизни путешественника.</li>
+        <li>Интерактивные задания: ролевые игры, аудиоситуации, мини-квесты.</li>
+        <li>Ребёнок выходит на уровень <strong>A2–B1 (Pre-Intermediate)</strong> за курс.</li>
+      </ul>
+    </section>
+
+    <!-- Требования -->
+    <section class="section">
+      <h2>💻 Что потребуется</h2>
+      <ul class="simple-list">
+        <li>Стационарный компьютер или ноутбук с наушниками и микрофоном</li>
+        <li>Стабильный интернет и Zoom</li>
+      </ul>
+    </section>
+
+    <!-- Расписание -->
+    <section class="section">
+      <h2>🕒 Расписание</h2>
+      <ul class="simple-list">
+        <li>Четверг, 15:00 (МСК) — группа 4–5 класс</li>
+        <li>Пятница, 15:30 (МСК) — группа 6–8 класс</li>
+      </ul>
+    </section>
+
+    <!-- Стоимость -->
+    <section class="section">
+      <h2>💳 Стоимость</h2>
+      <div class="pricing">
+        <div class="price-card">Полный курс (10 уроков): <strong>12 000 руб</strong></div>
+        <div class="price-card">Абонемент: <strong>1 300 руб / урок</strong></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+      <div class="cta-box">
+        <h2>📢 Набор открыт!</h2>
+        <p>Группы маленькие — максимум 6 детей, чтобы каждый получил внимание.<br>Места ограничены!</p>
+        <p class="highlight">👉 Запишитесь сейчас — и следующее путешествие станет первым, где ваш ребёнок заговорит по-английски без страха!</p>
+        <button class="cta-button" onclick="alert('Спасибо! Свяжусь с вами в ближайшее время.')">Записаться на курс</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Английский для путешествий</p>
+    </footer>
+  </div>
+</body>
 </html>
